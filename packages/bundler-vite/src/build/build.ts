@@ -72,7 +72,7 @@ export const build = async (
     const { app: vueApp, router: vueRouter } = await createVueApp()
     const { renderToString } = await import('vue/server-renderer')
 
-    if (spinner) spinner.text = `Starting to render pages ${chalk.magenta(app.pages?.map(vuePressPage => vuePressPage?.toString?.() + '\n'))}`
+    if (spinner) spinner.text = `Starting to render pages ${chalk.magenta(app.pages?.map(vuePressPage => vuePressPage?.toString?.()))}`
 
     // pre-render pages to html files
     await Promise.all(app.pages?.map((page) => renderPage({
