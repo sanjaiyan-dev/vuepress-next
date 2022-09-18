@@ -72,21 +72,20 @@ export const build = async (
     const { app: vueApp, router: vueRouter } = await createVueApp()
     const { renderToString } = await import('vue/server-renderer')
 
+    if (spinner) spinner.text = `Starting to render pages ${chalk.magenta(app.pages?.map(vuePressPage => vuePressPage?.toString?.() + '\n'))}`
+
     // pre-render pages to html files
-    for (const page of app.pages) {
-      if (spinner) spinner.text = `Rendering pages ${chalk.magenta(page.path)}`
-      await renderPage({
-        app,
-        page,
-        vueApp,
-        vueRouter,
-        renderToString,
-        ssrTemplate,
-        output: clientOutput.output,
-        outputEntryChunk: clientEntryChunk,
-        outputCssAsset: clientCssAsset,
-      })
-    }
+    await Promise.all(app.pages?.map((page) => renderPage({
+      app,
+      page,
+      vueApp,
+      vueRouter,
+      renderToString,
+      ssrTemplate,
+      output: clientOutput.output,
+      outputEntryChunk: clientEntryChunk,
+      outputCssAsset: clientCssAsset,
+    })))
   })
 
   // keep the server bundle files in debug mode
