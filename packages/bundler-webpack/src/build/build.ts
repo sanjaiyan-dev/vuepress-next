@@ -98,7 +98,7 @@ export const build = async (
     if (spinner) spinner.text = `Starting to render pages ${chalk.magenta(app.pages?.map(vuePressPage => vuePressPage?.path))}`
 
     // pre-render pages to html files
-    await Promise.all(app.pages?.map((page) => await renderPage({
+    await Promise.all(app.pages?.map((page) => renderPage({
       app,
       page,
       vueApp,
