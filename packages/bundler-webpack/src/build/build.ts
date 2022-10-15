@@ -95,7 +95,7 @@ export const build = async (
     const { app: vueApp, router: vueRouter } = await createVueApp()
     const { renderToString } = await import('vue/server-renderer')
 
-    if (spinner) spinner.text = `Starting to render pages ${chalk.magenta(app.pages?.map(vuePressPage => vuePressPage?.path))}`
+    if (spinner) spinner.text = `Starting to render pages`
 
     // pre-render pages to html files
     await Promise.all(app.pages?.map((page) => renderPage({
@@ -111,6 +111,8 @@ export const build = async (
       moduleFilesMetaMap,
     })))
   })
+
+  if (spinner) spinner.text = `Successfully rendered ${app.pages?.length} number of pages !!!`
 
   // keep the server bundle files in debug mode
   if (!app.env.isDebug) {
