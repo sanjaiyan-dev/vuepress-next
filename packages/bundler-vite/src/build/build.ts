@@ -75,20 +75,25 @@ export const build = async (
     if (spinner) spinner.text = `Starting to render pages`
 
     // pre-render pages to html files
-    await Promise.all(app.pages?.map((page) => renderPage({
-      app,
-      page,
-      vueApp,
-      vueRouter,
-      renderToString,
-      ssrTemplate,
-      output: clientOutput.output,
-      outputEntryChunk: clientEntryChunk,
-      outputCssAsset: clientCssAsset,
-    })))
+    await Promise.all(
+      app.pages?.map((page) =>
+        renderPage({
+          app,
+          page,
+          vueApp,
+          vueRouter,
+          renderToString,
+          ssrTemplate,
+          output: clientOutput.output,
+          outputEntryChunk: clientEntryChunk,
+          outputCssAsset: clientCssAsset,
+        })
+      )
+    )
   })
 
-  if (spinner) spinner.text = `Successfully rendered ${app.pages.length} number of pages !!!`
+  if (spinner)
+    spinner.text = `Successfully rendered ${app.pages.length} number of pages !!!`
 
   // keep the server bundle files in debug mode
   if (!app.env.isDebug) {
